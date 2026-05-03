@@ -39,7 +39,22 @@ end controller_fsm;
 
 architecture FSM of controller_fsm is
 
+    type state is (reset, op_1, op_2, math_op);
+		
+	signal current_state, next_state: state;
+
 begin
 
+    next_state <= current_state when i_adv = '0' else
+                  state'succ(current_state) when (i_adv = '1') else
+                  current_state;
+	              
+    with current_state select
+    o_cycle <= "0001" when reset,
+               "0010" when op_1,
+               "0100" when op_2,
+               "1000" when math_op,
+               "0001" when others;
+      
 
 end FSM;
