@@ -54,6 +54,7 @@ component sevenseg_decoder is
     
 component controller_fsm is
     port ( i_reset : in STD_LOGIC;
+           i_clk : in STD_LOGIC;
            i_adv : in STD_LOGIC;
            o_cycle : out STD_LOGIC_VECTOR (3 downto 0));
 end component controller_fsm;
@@ -113,34 +114,32 @@ signal w_cycle, w_hunds, w_tens, w_ones, w_anode, w_hex, o_an: std_logic_vector 
 signal w_clock, w_adv: std_logic := '0';
 signal w_sign: std_logic;
 signal w_sel, o_seg, o_sign_mux : std_logic_vector (6 downto 0);
-signal w_sign_padded : std_logic_vector (3 downto 0);
 
-
+constant k_clk_period : time := 20 ns;
   
 begin
 
     state_register : process(w_clock)           
-    begin                                     
-       if rising_edge(w_clock) then         
-          if btnU = '1' then           
-              reg_a <= (others => '0');
-              reg_b <= (others => '0');     
-          elsif w_adv = '1' then
+begin                                      
+    if rising_edge(clk) then         
+        if btnU = '1' then           
+            reg_a <= (others => '0');
+            reg_b <= (others => '0');     
+        elsif w_adv = '1' then
+            -- Note: We save to the register based on the state we ARE IN
+            -- before the FSM jumps to the next state on the same clock edge.
             case w_cycle is
-                when "0001" => 
-                    reg_a <= sw;
-                when "0010" => 
-                    reg_b <= sw;
-                when others => 
-                    null;
+                when "0001" => reg_a <= sw; -- Saving A as we move to state 2
+                when "0010" => reg_b <= sw; -- Saving B as we move to state 3
+                when others => null;
             end case;
         end if;
     end if;
-end process state_register;
+end process;
                       
 	-- PORT MAPS ----------------------------------------
 	clk_div : clock_divider -- How many clk cycles until slow clock toggle
-										   -- number (e.g., k_DIV := 2 --> clock divider of 4)
+	generic map ( k_DIV => 50000)							   -- number (e.g., k_DIV := 2 --> clock divider of 4)
 	port map( 	
 	        i_clk => clk,
 			i_reset	=> btnU,	   -- asynchronous
@@ -149,7 +148,7 @@ end process state_register;
 	
 	button_debounce_1: button_debounce
 	   port map(
-	   	clk => w_clock,
+	   	clk => clk,
 		reset => btnU,
 		button => btnC,
 		action => w_adv
@@ -158,6 +157,7 @@ end process state_register;
     controller_fsm_1 : controller_fsm
         port map(
             i_reset => btnU,
+            i_clk => clk,
             i_adv => w_adv,
             o_cycle => w_cycle
             );
@@ -213,15 +213,20 @@ end process state_register;
         "1111111" when others;
     
     with w_anode select
-       o_seg <=
-        o_sign_mux when "0111",
-        w_sel when others;
+    o_seg <=
+        o_sign_mux when "0111",  -- only left-most digit shows sign
+        w_sel      when others;
     
---    with w_cycle select
---       o_an <=
---        "1111" when "0001",
+--    with w_anode select
+--       o_seg <=
+--        o_sign_mux when "0111",
 --        w_sel when others;
-        
+    
+--with w_cycle select
+--    an <= w_anode when "0010", -- Show display for Reg A
+--          w_anode when "0100", -- Show display for Reg B
+--          w_anode when "1000", -- Show display for ALU Result
+--          "1111"  when others; -- Turn ALL anodes OFF in Reset or other states
 	
 	-- CONCURRENT STATEMENTS ----------------------------
 	an <= w_anode;

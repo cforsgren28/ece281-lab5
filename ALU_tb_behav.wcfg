@@ -3,63 +3,30 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="ALU_tb_behav.wdb" id="1">
+      <db_ref path="sevenseg_decoder_tb_behav.wdb" id="1">
          <top_modules>
-            <top_module name="ALU_tb" />
+            <top_module name="sevenseg_decoder_tb" />
          </top_modules>
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="14.941 ns"></ZoomEndTime>
-      <Cursor1Time time="41.914 ns"></Cursor1Time>
+      <ZoomStartTime time="0.075000 us"></ZoomStartTime>
+      <ZoomEndTime time="71.475001 us"></ZoomEndTime>
+      <Cursor1Time time="0.006611 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="167"></NameColumnWidth>
-      <ValueColumnWidth column_width="131"></ValueColumnWidth>
+      <ValueColumnWidth column_width="125"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="10" />
-   <wvobject fp_name="/ALU_tb/w_A" type="array">
-      <obj_property name="ElementShortName">w_A[7:0]</obj_property>
-      <obj_property name="ObjectShortName">w_A[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/ALU_tb/w_B" type="array">
-      <obj_property name="ElementShortName">w_B[7:0]</obj_property>
-      <obj_property name="ObjectShortName">w_B[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/ALU_tb/w_result" type="array">
-      <obj_property name="ElementShortName">w_result[7:0]</obj_property>
-      <obj_property name="ObjectShortName">w_result[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/ALU_tb/w_op" type="array">
-      <obj_property name="ElementShortName">w_op[2:0]</obj_property>
-      <obj_property name="ObjectShortName">w_op[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/ALU_tb/w_flags" type="array">
-      <obj_property name="ElementShortName">w_flags[3:0]</obj_property>
-      <obj_property name="ObjectShortName">w_flags[3:0]</obj_property>
-      <obj_property name="CustomSignalColor">#0000FF</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <WVObjectSize size="2" />
+   <wvobject fp_name="/sevenseg_decoder_tb/w_sw" type="array">
+      <obj_property name="ElementShortName">w_sw[3:0]</obj_property>
+      <obj_property name="ObjectShortName">w_sw[3:0]</obj_property>
       <obj_property name="isExpanded"></obj_property>
    </wvobject>
-   <wvobject fp_name="/ALU_tb/OP_ADD" type="array">
-      <obj_property name="ElementShortName">OP_ADD[2:0]</obj_property>
-      <obj_property name="ObjectShortName">OP_ADD[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/ALU_tb/OP_SUB" type="array">
-      <obj_property name="ElementShortName">OP_SUB[2:0]</obj_property>
-      <obj_property name="ObjectShortName">OP_SUB[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/ALU_tb/OP_AND" type="array">
-      <obj_property name="ElementShortName">OP_AND[2:0]</obj_property>
-      <obj_property name="ObjectShortName">OP_AND[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/ALU_tb/OP_OR" type="array">
-      <obj_property name="ElementShortName">OP_OR[2:0]</obj_property>
-      <obj_property name="ObjectShortName">OP_OR[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/ALU_tb/k_step" type="other">
-      <obj_property name="ElementShortName">k_step</obj_property>
-      <obj_property name="ObjectShortName">k_step</obj_property>
+   <wvobject fp_name="/sevenseg_decoder_tb/w_seg" type="array">
+      <obj_property name="ElementShortName">w_seg[6:0]</obj_property>
+      <obj_property name="ObjectShortName">w_seg[6:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
 </wave_config>
