@@ -113,7 +113,7 @@ signal w_cycle, w_hunds, w_tens, w_ones, w_anode, w_hex, o_an: std_logic_vector 
 signal w_clock, w_adv: std_logic := '0';
 signal w_sign: std_logic;
 signal w_sel, o_seg, o_sign_mux : std_logic_vector (6 downto 0);
-signal w_sign_padded : std_logic_vector (1 downto 0);
+signal w_sign_padded : std_logic_vector (3 downto 0);
 
 
   
@@ -188,7 +188,6 @@ end process state_register;
         o_ones => w_ones
     );
     
-    
     TDM4_1 : TDM4
     port map( 
            i_clk => w_clock,	
@@ -210,7 +209,8 @@ end process state_register;
     with w_sign select
        o_sign_mux <=
         "1111111" when '0',
-        "0111111" when '1';
+        "0111111" when '1',
+        "1111111" when others;
     
     with w_anode select
        o_seg <=
@@ -227,5 +227,6 @@ end process state_register;
 	an <= w_anode;
 	seg <= o_seg;
 	led(3 downto 0) <= w_cycle;
+	led(11 downto 4) <= (others => '0');
 	
 end top_basys3_arch;
