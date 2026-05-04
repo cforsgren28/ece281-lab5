@@ -214,13 +214,8 @@ end process;
     
     with w_anode select
     o_seg <=
-        o_sign_mux when "0111",  -- only left-most digit shows sign
+        o_sign_mux when "0111",
         w_sel      when others;
-    
---    with w_anode select
---       o_seg <=
---        o_sign_mux when "0111",
---        w_sel when others;
     
 --with w_cycle select
 --    an <= w_anode when "0010", -- Show display for Reg A
@@ -229,8 +224,8 @@ end process;
 --          "1111"  when others; -- Turn ALL anodes OFF in Reset or other states
 	
 	-- CONCURRENT STATEMENTS ----------------------------
-	an <= w_anode;
-	seg <= o_seg;
+	an <= "1111" when w_cycle = "0001" else w_anode;
+	seg <= (others => '1') when w_cycle = "0001" else o_seg;
 	led(3 downto 0) <= w_cycle;
 	led(11 downto 4) <= (others => '0');
 	
